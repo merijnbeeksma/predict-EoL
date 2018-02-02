@@ -1,0 +1,98 @@
+# DEVELOPMENT or VALIDATION
+WORKFLOW = 'VALIDATION'
+
+-----------------------------------------------------------------------------------------------
+# Phase 1
+-----------------------------------------------------------------------------------------------
+
+# spellfix.py
+# Tokens are assumed correctly spelled if at least this frequent in the OpenTaal frequency list
+MIN_OPENTAAL_FREQ = 10
+
+# Tokens are assumed correctly spelled if at least this frequent in the EPD corpus
+MIN_EPD_FREQ = 10
+
+# Maximum relative edit distance for spelling corrections
+MAX_REL_EDIT_DIST = 0.2
+
+
+-----------------------------------------------------------------------------------------------
+# Phase 2
+-----------------------------------------------------------------------------------------------
+
+# Keyword selection mechanism
+KEYWORD_SELECTORS = ('FREQUENCY', 'ENTROPY', 'WORD2VEC')
+WORD2VEC_DIMS = (100, 200, 300)
+
+# Event selection mechanism
+EVENT_SELECTORS = ('ABS_FREQ', 'REL_FREQ', 'REL_CUM_FREQ')
+ABS_FREQ_CUTOFF = 100            # Occurrences
+REL_FREQ_CUTOFF = 1.0            # Percent
+REL_CUM_FREQ_CUTOFF = 75.0       # Percent
+
+# Event aggregation levels
+ANA_LEVELS = ('CODE', 'SUB-CAT', 'MAIN-CAT', 'COLOR')
+CON_LEVELS = ('CODE',)
+DIA_LEVELS = ('CODE', 'SUB-CAT', 'MAIN-CAT', 'COLOR')
+ICD_LEVELS = ('CODE', 'SUB-CAT', 'MAIN-CAT')
+INT_LEVELS = ('CODE', 'SUB-CAT', 'MAIN-CAT', 'COLOR')
+MED_LEVELS = ('CODE',)
+MTW_LEVELS = ('CODE',)
+RFE_LEVELS = ('CODE', 'SUB-CAT', 'MAIN-CAT', 'COLOR')
+
+
+-----------------------------------------------------------------------------------------------
+# Phase 3
+-----------------------------------------------------------------------------------------------
+
+# Keyword selection mechanism
+KEYWORD_SELECTOR = 'ENTROPY'
+KEYWORD_TOP = 100
+
+# Event selection mechanism
+EVENT_SELECTOR = 'ABS_FREQ'
+
+# Event aggregation levels
+ANA_LEVEL = 'CODE'
+CON_LEVEL = 'CODE'
+DIA_LEVEL = 'CODE'
+ICD_LEVEL = 'CODE'
+INT_LEVEL = 'CODE'
+MED_LEVEL = 'CODE'
+MTW_LEVEL = 'CODE'
+RFE_LEVEL = 'CODE'
+
+# Patient history parameters
+PERIOD_LENGTH = 30               # days
+HISTORY_LENGTH = (5 * 365 + PERIOD_LENGTH) // PERIOD_LENGTH    # periods
+WINDOW_SIZE = 10                 # periods
+WINDOW_SHIFT = 3  # periods      # Alleen voor weka; moet 1 zijn voor TensorFlow!
+
+# TensorFlow parameters
+FOLDS = 2
+EPOCHS = 1
+BATCH_SIZE = 2
+NUM_LAYERS = 1
+NUM_HIDDEN = 10
+DROPOUT = 1.0
+LEARNING_RATE = 0.001
+LAST_PERIOD = False   # False: don't include the period in which the patient dies
+
+# Include keywords as features?
+INCLUDE_KEYWORDS = True
+
+# Subset of ('ADJ', 'BW', 'LET', 'LID', 'N', 'SPEC', 'TSW', 'TW', 'VG', 'VNW', 'VZ', 'WW')
+KEYWORD_FILTER = ('ADJ', 'N', 'WW')
+
+# Subset of ('ana', 'con', 'dia', 'icd', 'int', 'med', 'mtw', 'rfe')
+EVENT_FILTER = ('ana', 'con', 'dia', 'icd', 'int', 'med', 'mtw', 'rfe')
+
+
+-----------------------------------------------------------------------------------------------
+# Phase 4
+-----------------------------------------------------------------------------------------------
+
+# Each illness trajectory is defined by a set of diagnoses (ICPC codes).
+ILLNESS_TRAJECTORIES = {'cancer': set('B72 B73 B74 B75 D74 D75 D76 D77 F74 H75 K72 L71 N74 N76 R84 R85 R92 S77 S78 T71 T73 U75 U76 U77 U79 X75 X76 X77 X78 X81 Y77 Y78'.split()),'organ_failure': set('K77 R95'.split()),'dementia': set('P70 N87'.split())}
+
+
